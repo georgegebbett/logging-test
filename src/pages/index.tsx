@@ -6,6 +6,7 @@ export default function Home() {
     const {mutate: pino} = api.logging.pino.useMutation();
     const {mutate: winston} = api.logging.winston.useMutation();
     const {mutate: vanilla} = api.logging.vanilla.useMutation();
+    const {mutate: console} = api.logging.consoleInvestigation.useMutation();
 
     return (
         <>
@@ -28,6 +29,7 @@ export default function Home() {
                     <button onClick={() => pino()} type="button" className="bg-blue-500 py-2 px-4">Pino</button>
                     <button onClick={() => winston()} type="button" className="bg-blue-500 py-2 px-4">Winston</button>
                     <button onClick={() => vanilla()} type="button" className="bg-blue-500 py-2 px-4">Vanilla</button>
+                    <button onClick={() => console()} type="button" className="bg-blue-500 py-2 px-4">Console investigation</button>
                 </div>
             </main>
         </>

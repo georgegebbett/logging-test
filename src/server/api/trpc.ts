@@ -12,7 +12,7 @@ import {type CreateNextContextOptions} from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import {ZodError} from "zod";
 import {v4} from "uuid";
-import {__pinoLogger, pinoLoggerContext} from "~/server/loggers/pino/pino";
+import {__pinoLogger, pinoDestination, pinoLoggerContext} from "~/server/loggers/pino/pino";
 import {__winstonLogger, winstonLoggerContext} from "~/server/loggers/winston/winston";
 
 /**
@@ -132,7 +132,11 @@ export const pinoMiddleware = t.middleware(async ({path, type, next, ctx}) => {
         requestId: requestId,
     }
 
-    return pinoLoggerContext.run(store, () => next({ctx: {...ctx, requestId}}))
+    return pinoLoggerContext.run(store, () => {
+        const res = next({ctx: {...ctx, requestId}})
+        pinoDestination.flushSync()
+        return res
+    })
 })
 
 export const winstonMiddleware = t.middleware(async ({path, type, next, ctx}) => {

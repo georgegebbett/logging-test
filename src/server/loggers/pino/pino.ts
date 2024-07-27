@@ -20,18 +20,22 @@ const tprcErrorSerialiser = (trpcError: TRPCError) => ({
     ...pino.stdSerializers.err(trpcError),
 })
 
+export const pinoDestination = pino.destination({sync: false})
+
 export const __pinoLogger = pino({
-    level: process.env.NODE_ENV === "production" ? "info" : "debug",
-    serializers: {
-        err: tprcErrorSerialiser,
-        error: tprcErrorSerialiser,
+        level: process.env.NODE_ENV === "production" ? "info" : "debug",
+        serializers: {
+            err: tprcErrorSerialiser,
+            error: tprcErrorSerialiser,
+        },
+        base: {
+            env: process.env.NODE_ENV,
+            revision: process.env.VERCEL_GITHUB_COMMIT_SHA ?? "unknown",
+            logger: "pino"
+        }
     },
-    base: {
-        env: process.env.NODE_ENV,
-        revision: process.env.VERCEL_GITHUB_COMMIT_SHA ?? "unknown",
-        logger: "pino"
-    },
-})
+    pinoDestination
+)
 
 export const pinoLogger = new Proxy(__pinoLogger, {
     get(target, property, receiver) {
