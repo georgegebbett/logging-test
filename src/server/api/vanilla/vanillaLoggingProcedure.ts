@@ -1,8 +1,8 @@
-import {winstonProcedure} from "~/server/api/trpc";
+import {publicProcedure} from "~/server/api/trpc";
 import {massiveObject} from "~/server/utils/utils";
 import {asyncVanillaLoggingService, vanillaLoggingService} from "~/server/api/vanilla/vanillaLoggingService";
 
-export const vanillaLoggingProcedure = winstonProcedure
+export const vanillaLoggingProcedure = publicProcedure
     .mutation(async () => {
         console.info("Beginning Vanilla logging")
 
