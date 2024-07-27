@@ -1,7 +1,6 @@
 import {winstonProcedure} from "~/server/api/trpc";
 import {massiveObject} from "~/server/utils/utils";
-import {winstonLoggingService} from "~/server/api/winston/winstonLoggingService";
-import {asyncVanillaLoggingService} from "~/server/api/vanilla/vanillaLoggingService";
+import {asyncVanillaLoggingService, vanillaLoggingService} from "~/server/api/vanilla/vanillaLoggingService";
 
 export const vanillaLoggingProcedure = winstonProcedure
     .mutation(async () => {
@@ -21,7 +20,7 @@ export const vanillaLoggingProcedure = winstonProcedure
 
 
         console.info("Starting service log")
-        winstonLoggingService()
+        vanillaLoggingService()
         console.info("Service log complete")
 
         console.info("Starting async service log")
