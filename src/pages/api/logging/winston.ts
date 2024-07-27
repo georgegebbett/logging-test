@@ -11,6 +11,11 @@ function handler(
 ) {
 
     winstonLogger.info("Hello from Winston in the API route")
+    for (let i = 0; i < 250; i++) {
+
+        winstonLogger.info(`Winston - ${i}`)
+    }
+
 
     res.status(200).json({message: 'Hello from Next.js!'})
 }
